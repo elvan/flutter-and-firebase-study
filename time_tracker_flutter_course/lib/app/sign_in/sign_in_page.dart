@@ -31,6 +31,11 @@ class SignInPage extends StatelessWidget {
           SizedBox(height: 8.0),
           RaisedButton(
             color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(4.0),
+              ),
+            ),
             onPressed: () {},
             child: Text(
               'Sign in with Google',
