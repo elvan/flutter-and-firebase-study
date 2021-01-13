@@ -14,9 +14,17 @@ class _AuthCheckState extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
     if (_user == null) {
-      return SignInPage();
+      return SignInPage(
+        onSignIn: _updateUser,
+      );
     }
 
     return Container();
+  }
+
+  void _updateUser(User user) {
+    setState(() {
+      _user = user;
+    });
   }
 }
