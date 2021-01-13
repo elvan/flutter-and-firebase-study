@@ -7,5 +7,7 @@ abstract class AuthBase {
 
   Future<User> signInAnonymously();
 
+  Future<User> signInWithGoogle();
+
   Future<void> signOut();
 }
