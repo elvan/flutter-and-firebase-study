@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../home/home_page.dart';
@@ -15,35 +16,42 @@ class AuthCheck extends StatefulWidget {
 }
 
 class _AuthCheckState extends State<AuthCheck> {
-  User _user;
-
   @override
   void initState() {
     super.initState();
-    widget.auth.authStateChanges().listen((user) {
-      print('uid: ${user?.uid}');
-    });
     _updateUser(widget.auth.currentUser);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_user == null) {
-      return SignInPage(
-        auth: widget.auth,
-        onSignIn: _updateUser,
-      );
-    }
+    return StreamBuilder<User>(
+      stream: widget.auth.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final User user = snapshot.data;
+          if (user == null) {
+            return SignInPage(
+              auth: widget.auth,
+              onSignIn: _updateUser,
+            );
+          }
 
-    return HomePage(
-      auth: widget.auth,
-      onSignOut: () => _updateUser(null),
+          return HomePage(
+            auth: widget.auth,
+            onSignOut: () => _updateUser(null),
+          );
+        }
+
+        return Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
     );
   }
 
   void _updateUser(User user) {
-    setState(() {
-      _user = user;
-    });
+    setState(() {});
   }
 }
