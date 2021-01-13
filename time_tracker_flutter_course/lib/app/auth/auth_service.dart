@@ -5,8 +5,9 @@ class AuthService {
 
   User get currentUser => _firebaseAuth.currentUser;
 
-  Future<void> signInAnonymously() async {
+  Future<User> signInAnonymously() async {
     final userCredential = await _firebaseAuth.signInAnonymously();
+    return userCredential.user;
   }
 
   Future<void> signOut() async {
