@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
   Future<void> _signOut() async {
     try {
       await auth.signOut();
-    } on Exception catch (e) {
+    } catch (e) {
       print(e.toString());
     }
   }
