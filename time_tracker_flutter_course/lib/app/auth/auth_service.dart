@@ -9,6 +9,9 @@ class AuthService implements AuthBase {
   User get currentUser => _firebaseAuth.currentUser;
 
   @override
+  Stream<User> authStateChanges() => _firebaseAuth.authStateChanges();
+
+  @override
   Future<User> signInAnonymously() async {
     final userCredential = await _firebaseAuth.signInAnonymously();
     return userCredential.user;

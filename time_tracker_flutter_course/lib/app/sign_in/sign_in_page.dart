@@ -90,7 +90,7 @@ class SignInPage extends StatelessWidget {
     try {
       final user = await auth.signInAnonymously();
       onSignIn(user);
-    } on Exception catch (e) {
+    } catch (e) {
       print(e.toString());
     }
   }

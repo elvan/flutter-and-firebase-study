@@ -1,1 +1,1 @@
-# flutter-firebase-build-a-complete-app-study
+# flutter-and-firebase-study
