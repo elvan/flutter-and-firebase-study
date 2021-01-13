@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/auth_base.dart';
@@ -7,12 +6,10 @@ import 'social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
   final AuthBase auth;
-  final void Function(User) onSignIn;
 
   const SignInPage({
     Key key,
     @required this.auth,
-    @required this.onSignIn,
   }) : super(key: key);
 
   @override
@@ -89,7 +86,6 @@ class SignInPage extends StatelessWidget {
   Future<void> _signInAnonymously() async {
     try {
       final user = await auth.signInAnonymously();
-      onSignIn(user);
     } catch (e) {
       print(e.toString());
     }

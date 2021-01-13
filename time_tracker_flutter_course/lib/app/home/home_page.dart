@@ -4,12 +4,10 @@ import '../auth/auth_base.dart';
 
 class HomePage extends StatelessWidget {
   final AuthBase auth;
-  final VoidCallback onSignOut;
 
   const HomePage({
     Key key,
     @required this.auth,
-    @required this.onSignOut,
   }) : super(key: key);
 
   @override
@@ -40,7 +38,6 @@ class HomePage extends StatelessWidget {
   Future<void> _signOut() async {
     try {
       await auth.signOut();
-      onSignOut();
     } on Exception catch (e) {
       print(e.toString());
     }
