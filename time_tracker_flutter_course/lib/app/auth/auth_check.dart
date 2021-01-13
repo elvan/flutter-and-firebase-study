@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../home/home_page.dart';
 import '../sign_in/sign_in_page.dart';
 
 class AuthCheck extends StatefulWidget {
@@ -19,7 +20,7 @@ class _AuthCheckState extends State<AuthCheck> {
       );
     }
 
-    return Container();
+    return HomePage();
   }
 
   void _updateUser(User user) {
