@@ -20,7 +20,9 @@ class _AuthCheckState extends State<AuthCheck> {
       );
     }
 
-    return HomePage();
+    return HomePage(
+      onSignOut: () => _updateUser(null),
+    );
   }
 
   void _updateUser(User user) {
