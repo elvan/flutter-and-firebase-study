@@ -25,3 +25,5 @@ doc/api/
 time_tracker_flutter_course/android/app/google-services.json
 time_tracker_flutter_course/android/app/.classpath
 time_tracker_flutter_course/android/app/.project
+
+time_tracker_flutter_course/android/app/src/main/res/values/strings.xml
