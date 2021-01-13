@@ -13,6 +13,12 @@ class _AuthCheckState extends State<AuthCheck> {
   User _user;
 
   @override
+  void initState() {
+    super.initState();
+    _updateUser(FirebaseAuth.instance.currentUser);
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (_user == null) {
       return SignInPage(
