@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'sign_in/sign_in_page.dart';
+import 'landing_page.dart';
 
 class TimeTrackerApp extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class TimeTrackerApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: SignInPage(),
+      home: LandingPage(),
     );
   }
 }
