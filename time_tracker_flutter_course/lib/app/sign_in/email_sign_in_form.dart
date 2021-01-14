@@ -48,6 +48,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ? 'Need an account? Register'
         : 'Have an account? Sign in';
 
+    bool submitEnabled = _email.isNotEmpty && _password.isNotEmpty;
+
     return [
       _emailTextField(),
       SizedBox(height: 8.0),
@@ -55,7 +57,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       SizedBox(height: 8.0),
       FormSubmitButton(
         text: primaryText,
-        onPressed: _submit,
+        onPressed: submitEnabled ? _submit : null,
       ),
       SizedBox(height: 8.0),
       FlatButton(
@@ -77,6 +79,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         hintText: 'user@example.com',
       ),
       onEditingComplete: _emailEditingComplete,
+      onChanged: (email) => _updateState(),
     );
   }
 
@@ -90,6 +93,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       ),
       obscureText: true,
       onEditingComplete: _submit,
+      onChanged: (email) => _updateState(),
     );
   }
 
@@ -118,5 +122,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   void _emailEditingComplete() {
     FocusScope.of(context).requestFocus(_passwordNode);
+  }
+
+  void _updateState() {
+    setState(() {});
   }
 }
