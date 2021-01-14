@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'auth_base.dart';
@@ -48,9 +49,45 @@ class AuthService implements AuthBase {
   }
 
   @override
+  Future<User> signInWithFacebook() async {
+    final facebookLogin = FacebookLogin();
+    final response = await facebookLogin.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
+    );
+
+    switch (response.status) {
+      case FacebookLoginStatus.success:
+        final accessToken = response.accessToken;
+        final userCredential = await _firebaseAuth.signInWithCredential(
+          FacebookAuthProvider.credential(accessToken.token),
+        );
+        return userCredential.user;
+      case FacebookLoginStatus.cancel:
+        throw FirebaseAuthException(
+          message: 'Sign in aborted by user',
+          code: 'ERROR_ABORTED_BY_USER',
+        );
+      case FacebookLoginStatus.error:
+        throw FirebaseAuthException(
+          message: response.error.developerMessage,
+          code: 'ERROR_FACEBOOK_LOGIN_FAILED',
+        );
+      default:
+        throw UnimplementedError();
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     final googleSignIn = GoogleSignIn();
     await googleSignIn.signOut();
+
+    final facebookLogin = FacebookLogin();
+    await facebookLogin.logOut();
+
     await _firebaseAuth.signOut();
   }
 }

@@ -9,5 +9,7 @@ abstract class AuthBase {
 
   Future<User> signInWithGoogle();
 
+  Future<User> signInWithFacebook();
+
   Future<void> signOut();
 }
