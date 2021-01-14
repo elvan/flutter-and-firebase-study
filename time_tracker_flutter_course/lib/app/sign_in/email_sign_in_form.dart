@@ -24,10 +24,11 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final _emailNode = FocusNode();
   final _passwordNode = FocusNode();
 
+  EmailSignInFormType _formType = EmailSignInFormType.signIn;
+  bool _submitted = false;
+
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
-
-  EmailSignInFormType _formType = EmailSignInFormType.signIn;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _emailTextField() {
-    bool emailValid = widget.emailValidator.isValid(_email);
+    bool showErrorText = _submitted && !widget.emailValidator.isValid(_email);
 
     return TextField(
       controller: _emailController,
@@ -81,7 +82,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       decoration: InputDecoration(
         labelText: 'Email',
         hintText: 'user@example.com',
-        errorText: emailValid ? null : widget.invalidEmailErrorText,
+        errorText: showErrorText ? widget.invalidEmailErrorText : null,
       ),
       onEditingComplete: _emailEditingComplete,
       onChanged: (email) => _updateState(),
@@ -89,7 +90,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   TextField _passwordTextField() {
-    bool passwordValid = widget.passwordValidator.isValid(_password);
+    bool showErrorText =
+        _submitted && !widget.passwordValidator.isValid(_password);
 
     return TextField(
       controller: _passwordController,
@@ -97,7 +99,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         labelText: 'Password',
-        errorText: passwordValid ? null : widget.invalidPasswordErrorText,
+        errorText: showErrorText ? widget.invalidPasswordErrorText : null,
       ),
       obscureText: true,
       onEditingComplete: _submit,
@@ -106,6 +108,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   }
 
   void _submit() async {
+    setState(() {
+      _submitted = true;
+    });
+
     try {
       if (_formType == EmailSignInFormType.signIn) {
         await widget.auth.signInWithEmailAndPassword(_email, _password);
@@ -120,6 +126,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
 
   void _toggleFormType() {
     setState(() {
+      _submitted = false;
       _formType = _formType == EmailSignInFormType.signIn
           ? EmailSignInFormType.register
           : EmailSignInFormType.signIn;
