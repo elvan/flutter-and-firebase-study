@@ -8,7 +8,7 @@ class FormSubmitButton extends CustomRaisedButton {
     VoidCallback onPressed,
   }) : super(
           height: 44.0,
-          color: Colors.indigo,
+          color: Colors.tealAccent[700],
           borderRadius: 4.0,
           onPressed: onPressed,
           child: Text(
