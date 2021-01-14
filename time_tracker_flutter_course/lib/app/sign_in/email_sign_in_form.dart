@@ -20,6 +20,8 @@ class EmailSignInForm extends StatefulWidget {
 class _EmailSignInFormState extends State<EmailSignInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _emailNode = FocusNode();
+  final _passwordNode = FocusNode();
 
   String get _email => _emailController.text;
   String get _password => _passwordController.text;
@@ -63,20 +65,10 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     ];
   }
 
-  TextField _passwordTextField() {
-    return TextField(
-      controller: _passwordController,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        labelText: 'Password',
-      ),
-      obscureText: true,
-    );
-  }
-
   TextField _emailTextField() {
     return TextField(
       controller: _emailController,
+      focusNode: _emailNode,
       autocorrect: false,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
@@ -84,6 +76,20 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         labelText: 'Email',
         hintText: 'user@example.com',
       ),
+      onEditingComplete: _emailEditingComplete,
+    );
+  }
+
+  TextField _passwordTextField() {
+    return TextField(
+      controller: _passwordController,
+      focusNode: _passwordNode,
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        labelText: 'Password',
+      ),
+      obscureText: true,
+      onEditingComplete: _submit,
     );
   }
 
@@ -108,5 +114,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     });
     _emailController.clear();
     _passwordController.clear();
+  }
+
+  void _emailEditingComplete() {
+    FocusScope.of(context).requestFocus(_passwordNode);
   }
 }
