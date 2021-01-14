@@ -21,6 +21,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  String get _email => _emailController.text;
+  String get _password => _passwordController.text;
+
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
 
   @override
@@ -44,21 +47,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         : 'Have an account? Sign in';
 
     return [
-      TextField(
-        controller: _emailController,
-        decoration: InputDecoration(
-          labelText: 'Email',
-          hintText: 'user@example.com',
-        ),
-      ),
+      _emailTextField(),
       SizedBox(height: 8.0),
-      TextField(
-        controller: _passwordController,
-        decoration: InputDecoration(
-          labelText: 'Password',
-        ),
-        obscureText: true,
-      ),
+      _passwordTextField(),
       SizedBox(height: 8.0),
       FormSubmitButton(
         text: primaryText,
@@ -72,10 +63,41 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     ];
   }
 
-  void _submit() {
-    print(
-      'Email: ${_emailController.text}, password: ${_passwordController.text}',
+  TextField _passwordTextField() {
+    return TextField(
+      controller: _passwordController,
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        labelText: 'Password',
+      ),
+      obscureText: true,
     );
+  }
+
+  TextField _emailTextField() {
+    return TextField(
+      controller: _emailController,
+      autocorrect: false,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        labelText: 'Email',
+        hintText: 'user@example.com',
+      ),
+    );
+  }
+
+  void _submit() async {
+    try {
+      if (_formType == EmailSignInFormType.signIn) {
+        await widget.auth.signInWithEmailAndPassword(_email, _password);
+      } else {
+        await widget.auth.createUserWithEmailAndPassword(_email, _password);
+      }
+      Navigator.of(context).pop();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   void _toggleFormType() {
