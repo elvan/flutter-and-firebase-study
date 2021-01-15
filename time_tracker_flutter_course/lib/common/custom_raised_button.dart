@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomRaisedButton extends StatelessWidget {
   final Widget child;
   final Color color;
+  final Color disabledColor;
   final double borderRadius;
   final double height;
   final VoidCallback onPressed;
@@ -13,6 +14,7 @@ class CustomRaisedButton extends StatelessWidget {
     this.height: 50.0,
     this.onPressed,
     this.child,
+    this.disabledColor,
   }) : assert(borderRadius != null);
 
   @override
@@ -28,7 +30,7 @@ class CustomRaisedButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: child,
-        disabledColor: color,
+        disabledColor: disabledColor ?? color,
       ),
     );
   }

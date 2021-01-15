@@ -5,10 +5,12 @@ import 'custom_raised_button.dart';
 class FormSubmitButton extends CustomRaisedButton {
   FormSubmitButton({
     @required String text,
+    Color disabledColor,
     VoidCallback onPressed,
   }) : super(
           height: 44.0,
           color: Colors.tealAccent[700],
+          disabledColor: disabledColor,
           borderRadius: 4.0,
           onPressed: onPressed,
           child: Text(
