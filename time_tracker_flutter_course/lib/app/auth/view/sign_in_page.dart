@@ -15,8 +15,10 @@ class SignInPage extends StatelessWidget {
   const SignInPage({Key key, @required this.bloc}) : super(key: key);
 
   static Widget create(BuildContext context) {
+    final auth = Provider.of<AuthBase>(context, listen: false);
+
     return Provider<SignInBloc>(
-      create: (context) => SignInBloc(),
+      create: (context) => SignInBloc(auth: auth),
       dispose: (context, bloc) => bloc.dispose(),
       child: Consumer<SignInBloc>(
         builder: (context, bloc, widget) => SignInPage(bloc: bloc),
@@ -92,29 +94,27 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  Future<void> _signInWithGoogle(BuildContext context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-
+  Future<void> _signInAnonymously(BuildContext context) async {
     try {
-      bloc.setIsLoading(true);
-      await auth.signInWithGoogle();
+      await bloc.signInAnonymously();
     } on Exception catch (exc) {
       _showSignInError(context, exc);
-    } finally {
-      bloc.setIsLoading(false);
+    }
+  }
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      await bloc.signInWithGoogle();
+    } on Exception catch (exc) {
+      _showSignInError(context, exc);
     }
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-
     try {
-      bloc.setIsLoading(true);
-      await auth.signInWithFacebook();
+      await bloc.signInWithFacebook();
     } on Exception catch (exc) {
       _showSignInError(context, exc);
-    } finally {
-      bloc.setIsLoading(false);
     }
   }
 
@@ -125,19 +125,6 @@ class SignInPage extends StatelessWidget {
         builder: (context) => EmailSignInPage(),
       ),
     );
-  }
-
-  Future<void> _signInAnonymously(BuildContext context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-
-    try {
-      bloc.setIsLoading(true);
-      await auth.signInAnonymously();
-    } on Exception catch (exc) {
-      _showSignInError(context, exc);
-    } finally {
-      bloc.setIsLoading(false);
-    }
   }
 
   void _showSignInError(BuildContext context, Exception exception) {
