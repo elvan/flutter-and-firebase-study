@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../common/show_alert_dialog.dart';
 import '../auth/auth_base.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,18 +14,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
       title: Text('Home Page'),
       actions: [
         FlatButton(
-          onPressed: _signOut,
+          onPressed: () => _confirmSignOut(context),
           child: Text(
-            'Sign Out',
+            'Logout',
             style: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
@@ -40,6 +41,20 @@ class HomePage extends StatelessWidget {
       await auth.signOut();
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future<void> _confirmSignOut(BuildContext context) async {
+    final didRequestSignOut = await showAlertDialog(
+      context,
+      title: 'Logout',
+      content: 'Are you sure that you want to logout?',
+      defaultActionText: 'Logout',
+      cancelActionText: 'Cancel',
+    );
+
+    if (didRequestSignOut == true) {
+      _signOut();
     }
   }
 }

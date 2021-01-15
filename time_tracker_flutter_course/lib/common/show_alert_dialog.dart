@@ -8,6 +8,7 @@ Future<bool> showAlertDialog(
   @required String title,
   @required String content,
   @required String defaultActionText,
+  String cancelActionText,
 }) {
   if (!Platform.isIOS) {
     return showDialog(
@@ -16,6 +17,11 @@ Future<bool> showAlertDialog(
         title: Text(title),
         content: Text(content),
         actions: [
+          if (cancelActionText != null)
+            FlatButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(cancelActionText),
+            ),
           FlatButton(
             child: Text(defaultActionText),
             onPressed: () => Navigator.of(context).pop(true),
@@ -31,6 +37,11 @@ Future<bool> showAlertDialog(
       title: Text(title),
       content: Text(content),
       actions: [
+        if (cancelActionText != null)
+          CupertinoDialogAction(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(cancelActionText),
+          ),
         CupertinoDialogAction(
           child: Text(defaultActionText),
           onPressed: () => Navigator.of(context).pop(true),
