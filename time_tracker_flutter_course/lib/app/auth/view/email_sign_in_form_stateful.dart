@@ -5,12 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../common/form_submit_button.dart';
 import '../../../common/show_exception_alert_dialog.dart';
 import '../../../validator/email_and_password_validator.dart';
+import '../model/email_sign_in_form_type.dart';
 import '../service/auth_base.dart';
-
-enum EmailSignInFormType {
-  signIn,
-  register,
-}
 
 class EmailSignInFormStateful extends StatefulWidget
     with EmailAndPasswordValidator {
