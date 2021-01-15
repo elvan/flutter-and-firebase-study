@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/auth_base.dart';
 import 'auth/auth_check.dart';
-import 'auth/auth_service.dart';
+import 'auth/service/auth_base.dart';
+import 'auth/service/auth_service.dart';
 
 class TimeTrackerApp extends StatelessWidget {
   @override

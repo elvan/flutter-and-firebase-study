@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/form_submit_button.dart';
-import '../../common/show_exception_alert_dialog.dart';
-import '../../validator/email_and_password_validator.dart';
-import '../auth/auth_base.dart';
+import '../../../common/form_submit_button.dart';
+import '../../../common/show_exception_alert_dialog.dart';
+import '../../../validator/email_and_password_validator.dart';
+import '../service/auth_base.dart';
 
 enum EmailSignInFormType {
   signIn,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/show_alert_dialog.dart';
-import '../auth/auth_base.dart';
+import '../auth/service/auth_base.dart';
 
 class HomePage extends StatelessWidget {
   @override
