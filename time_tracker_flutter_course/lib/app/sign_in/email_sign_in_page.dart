@@ -21,10 +21,12 @@ class EmailSignInPage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        child: EmailSignInForm(auth: auth),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Card(
+          child: EmailSignInForm(auth: auth),
+        ),
       ),
     );
   }
