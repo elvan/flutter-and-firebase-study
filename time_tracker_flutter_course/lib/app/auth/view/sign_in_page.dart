@@ -10,17 +10,21 @@ import 'sign_in_button.dart';
 import 'social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
+  final SignInBloc bloc;
+
+  const SignInPage({Key key, @required this.bloc}) : super(key: key);
+
   static Widget create(BuildContext context) {
     return Provider<SignInBloc>(
-      create: (_) => SignInBloc(),
-      child: SignInPage(),
+      create: (context) => SignInBloc(),
+      child: Consumer<SignInBloc>(
+        builder: (context, bloc, widget) => SignInPage(bloc: bloc),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<SignInBloc>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Time Tracker'),
@@ -88,7 +92,6 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<void> _signInWithGoogle(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context, listen: false);
     final auth = Provider.of<AuthBase>(context, listen: false);
 
     try {
@@ -102,7 +105,6 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<void> _signInWithFacebook(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context, listen: false);
     final auth = Provider.of<AuthBase>(context, listen: false);
 
     try {
@@ -125,7 +127,6 @@ class SignInPage extends StatelessWidget {
   }
 
   Future<void> _signInAnonymously(BuildContext context) async {
-    final bloc = Provider.of<SignInBloc>(context, listen: false);
     final auth = Provider.of<AuthBase>(context, listen: false);
 
     try {
