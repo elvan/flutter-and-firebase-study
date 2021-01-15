@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/form_submit_button.dart';
-import '../../common/show_alert_dialog.dart';
+import '../../common/show_exception_alert_dialog.dart';
 import '../../validator/email_and_password_validator.dart';
 import '../auth/auth_base.dart';
 
@@ -125,12 +125,11 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         await auth.createUserWithEmailAndPassword(_email, _password);
       }
       Navigator.of(context).pop();
-    } on FirebaseAuthException catch (e) {
-      showAlertDialog(
+    } on FirebaseAuthException catch (exc) {
+      showExceptionAlertDialog(
         context,
         title: 'Sign in failed',
-        content: e.message,
-        defaultActionText: 'OK',
+        exception: exc,
       );
     } finally {
       setState(() {
