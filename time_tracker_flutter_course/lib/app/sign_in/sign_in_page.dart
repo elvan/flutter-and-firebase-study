@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/show_exception_alert_dialog.dart';
 import '../auth/auth_base.dart';
 import 'email_sign_in_page.dart';
 import 'sign_in_button.dart';
@@ -83,8 +85,8 @@ class SignInPage extends StatelessWidget {
 
     try {
       await auth.signInWithGoogle();
-    } catch (e) {
-      print(e.toString());
+    } on Exception catch (exc) {
+      _showSignInError(context, exc);
     }
   }
 
@@ -93,8 +95,8 @@ class SignInPage extends StatelessWidget {
 
     try {
       await auth.signInWithFacebook();
-    } catch (e) {
-      print(e.toString());
+    } on Exception catch (exc) {
+      _showSignInError(context, exc);
     }
   }
 
@@ -114,8 +116,21 @@ class SignInPage extends StatelessWidget {
 
     try {
       await auth.signInAnonymously();
-    } catch (e) {
-      print(e.toString());
+    } on Exception catch (exc) {
+      _showSignInError(context, exc);
     }
+  }
+
+  void _showSignInError(BuildContext context, Exception exception) {
+    if (exception is FirebaseAuthException &&
+        exception.code == 'ERROR_ABORTED_BY_USER') {
+      return;
+    }
+
+    showExceptionAlertDialog(
+      context,
+      title: 'Sign in failed',
+      exception: exception,
+    );
   }
 }
