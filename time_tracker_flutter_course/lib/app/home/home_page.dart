@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../common/show_alert_dialog.dart';
-import '../auth/auth_base.dart';
+import '../auth/auth_provider.dart';
 
 class HomePage extends StatelessWidget {
-  final AuthBase auth;
-
-  const HomePage({
-    Key key,
-    @required this.auth,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +29,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Future<void> _signOut() async {
+  Future<void> _signOut(context) async {
+    final auth = AuthProvider.of(context);
+
     try {
       await auth.signOut();
     } catch (e) {
@@ -54,7 +49,7 @@ class HomePage extends StatelessWidget {
     );
 
     if (didRequestSignOut == true) {
-      _signOut();
+      _signOut(context);
     }
   }
 }

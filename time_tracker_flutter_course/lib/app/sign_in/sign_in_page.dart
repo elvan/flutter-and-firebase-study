@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../auth/auth_base.dart';
+import '../auth/auth_provider.dart';
 import 'email_sign_in_page.dart';
 import 'sign_in_button.dart';
 import 'social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
-  final AuthBase auth;
-
-  const SignInPage({
-    Key key,
-    @required this.auth,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +39,7 @@ class SignInPage extends StatelessWidget {
             assetName: 'images/google-logo.png',
             color: Colors.white,
             textColor: Colors.black87,
-            onPressed: _signInWithGoogle,
+            onPressed: () => _signInWithGoogle(context),
           ),
           SizedBox(height: 8.0),
           SocialSignInButton(
@@ -54,7 +47,7 @@ class SignInPage extends StatelessWidget {
             assetName: 'images/facebook-logo.png',
             color: Color(0xFF3B5998),
             textColor: Colors.white,
-            onPressed: _signInWithFacebook,
+            onPressed: () => _signInWithFacebook(context),
           ),
           SizedBox(height: 8.0),
           SignInButton(
@@ -77,14 +70,16 @@ class SignInPage extends StatelessWidget {
             text: 'Go anonymous',
             color: Colors.blueGrey[400],
             textColor: Colors.white,
-            onPressed: _signInAnonymously,
+            onPressed: () => _signInAnonymously(context),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    final auth = AuthProvider.of(context);
+
     try {
       await auth.signInWithGoogle();
     } catch (e) {
@@ -92,7 +87,9 @@ class SignInPage extends StatelessWidget {
     }
   }
 
-  Future<void> _signInWithFacebook() async {
+  Future<void> _signInWithFacebook(BuildContext context) async {
+    final auth = AuthProvider.of(context);
+
     try {
       await auth.signInWithFacebook();
     } catch (e) {
@@ -101,15 +98,19 @@ class SignInPage extends StatelessWidget {
   }
 
   void _signInWithEmail(BuildContext context) {
+    final auth = AuthProvider.of(context);
+
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         fullscreenDialog: true,
-        builder: (context) => EmailSignInPage(auth: auth),
+        builder: (context) => EmailSignInPage(),
       ),
     );
   }
 
-  Future<void> _signInAnonymously() async {
+  Future<void> _signInAnonymously(BuildContext context) async {
+    final auth = AuthProvider.of(context);
+
     try {
       await auth.signInAnonymously();
     } catch (e) {

@@ -14,9 +14,7 @@ class TimeTrackerApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        home: AuthCheck(
-          auth: AuthService(),
-        ),
+        home: AuthCheck(),
       ),
     );
   }
