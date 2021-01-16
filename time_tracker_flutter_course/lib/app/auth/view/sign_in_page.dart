@@ -11,19 +11,30 @@ import 'social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
   final SignInBloc bloc;
+  final bool isLoading;
 
-  const SignInPage({Key key, @required this.bloc}) : super(key: key);
+  const SignInPage({
+    Key key,
+    @required this.bloc,
+    @required this.isLoading,
+  }) : super(key: key);
 
   static Widget create(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
 
     return ChangeNotifierProvider<ValueNotifier<bool>>(
-      create: (context) => ValueNotifier<bool>(false),
+      create: (_) => ValueNotifier<bool>(false),
       child: Consumer<ValueNotifier<bool>>(
-        builder: (context, isLoading, widget) => Provider<SignInBloc>(
-          create: (context) => SignInBloc(auth: auth, isLoading: isLoading),
+        builder: (_, isLoadingNotifier, __) => Provider<SignInBloc>(
+          create: (_) => SignInBloc(
+            auth: auth,
+            isLoadingNotifier: isLoadingNotifier,
+          ),
           child: Consumer<SignInBloc>(
-            builder: (context, bloc, widget) => SignInPage(bloc: bloc),
+            builder: (_, bloc, __) => SignInPage(
+              bloc: bloc,
+              isLoading: isLoadingNotifier.value,
+            ),
           ),
         ),
       ),
@@ -32,19 +43,17 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = Provider.of<ValueNotifier<bool>>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Time Tracker'),
         elevation: 2.0,
       ),
       backgroundColor: Colors.grey[200],
-      body: _buildBody(context, isLoading.value),
+      body: _buildBody(context),
     );
   }
 
-  Widget _buildBody(BuildContext context, bool isLoading) {
+  Widget _buildBody(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Column(

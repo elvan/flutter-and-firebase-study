@@ -7,11 +7,11 @@ import '../service/auth_base.dart';
 
 class SignInBloc {
   final AuthBase auth;
-  final ValueNotifier<bool> isLoading;
+  final ValueNotifier<bool> isLoadingNotifier;
 
   SignInBloc({
     @required this.auth,
-    this.isLoading,
+    this.isLoadingNotifier,
   });
 
   Future<User> signInAnonymously() async {
@@ -28,10 +28,10 @@ class SignInBloc {
 
   Future<User> _signIn(Future<User> Function() signInMethod) async {
     try {
-      isLoading.value = true;
+      isLoadingNotifier.value = true;
       return await signInMethod();
     } catch (e) {
-      isLoading.value = false;
+      isLoadingNotifier.value = false;
       rethrow;
     }
   }
