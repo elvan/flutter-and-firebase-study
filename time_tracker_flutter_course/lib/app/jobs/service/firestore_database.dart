@@ -13,16 +13,25 @@ class FirestoreDatabase implements Database {
   @override
   void createJob(Job job) {
     _setData(
-      documentPath: APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1'),
+      path: APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1'),
       data: job.toMap(),
     );
   }
 
+  void readJobs() {
+    final path = APIPath.jobList(uid);
+    final reference = FirebaseFirestore.instance.collection(path);
+    final snapshots = reference.snapshots();
+    snapshots.listen((event) {
+      event.docs.forEach((element) => print(element.data()));
+    });
+  }
+
   Future<void> _setData({
-    String documentPath,
+    String path,
     Map<String, dynamic> data,
   }) async {
-    final documentReference = FirebaseFirestore.instance.doc(documentPath);
-    await documentReference.set(data);
+    final reference = FirebaseFirestore.instance.doc(path);
+    await reference.set(data);
   }
 }
