@@ -11,9 +11,18 @@ class FirestoreDatabase implements Database {
   FirestoreDatabase({@required this.uid}) : assert(uid != null);
 
   @override
-  Future<void> createJob(Job job) async {
-    final documentPath = APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1');
+  void createJob(Job job) {
+    _setData(
+      documentPath: APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1'),
+      data: job.toMap(),
+    );
+  }
+
+  Future<void> _setData({
+    String documentPath,
+    Map<String, dynamic> data,
+  }) async {
     final documentReference = FirebaseFirestore.instance.doc(documentPath);
-    await documentReference.set(job.toMap());
+    await documentReference.set(data);
   }
 }
