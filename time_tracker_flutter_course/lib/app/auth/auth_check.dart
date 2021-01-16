@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course/app/jobs/service/firestore_database.dart';
 
+import '../jobs/service/database.dart';
 import '../jobs/view/jobs_page.dart';
 import 'service/auth_base.dart';
 import 'view/sign_in_page.dart';
@@ -20,7 +22,10 @@ class AuthCheck extends StatelessWidget {
             return SignInPage.create(context);
           }
 
-          return JobsPage();
+          return Provider<Database>(
+            create: (_) => FirestoreDatabase(uid: user.uid),
+            child: JobsPage(),
+          );
         }
 
         return Scaffold(
