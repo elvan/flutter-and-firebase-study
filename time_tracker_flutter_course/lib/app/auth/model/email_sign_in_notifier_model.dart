@@ -4,7 +4,7 @@ import '../../../validator/email_and_password_validator.dart';
 import '../service/auth_base.dart';
 import 'email_sign_in_form_type.dart';
 
-class EmailSignInChangeModel with EmailAndPasswordValidator, ChangeNotifier {
+class EmailSignInNotifierModel with EmailAndPasswordValidator, ChangeNotifier {
   final AuthBase auth;
 
   String email;
@@ -13,7 +13,7 @@ class EmailSignInChangeModel with EmailAndPasswordValidator, ChangeNotifier {
   bool isLoading;
   bool submitted;
 
-  EmailSignInChangeModel({
+  EmailSignInNotifierModel({
     @required this.auth,
     this.email = '',
     this.password = '',
