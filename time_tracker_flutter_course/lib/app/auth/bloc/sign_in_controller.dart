@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 
 import '../service/auth_base.dart';
 
-class SignInBloc {
+class SignInController {
   final AuthBase auth;
   final ValueNotifier<bool> isLoadingNotifier;
 
-  SignInBloc({
+  SignInController({
     @required this.auth,
     this.isLoadingNotifier,
   });
