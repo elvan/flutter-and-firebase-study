@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/show_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
+import '../service/database.dart';
 
 class JobsPage extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class JobsPage extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: _createJob,
+        onPressed: () => _createJob(context),
         child: Icon(Icons.add),
       ),
     );
@@ -58,5 +59,11 @@ class JobsPage extends StatelessWidget {
     }
   }
 
-  void _createJob() {}
+  Future<void> _createJob(BuildContext context) async {
+    final database = Provider.of<Database>(context, listen: false);
+    await database.createJob({
+      'name': 'Create Firebase Apps',
+      'ratePerHour': 10,
+    });
+  }
 }
