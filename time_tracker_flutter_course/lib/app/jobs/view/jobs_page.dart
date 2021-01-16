@@ -11,15 +11,13 @@ import '../service/database.dart';
 class JobsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final database = Provider.of<Database>(context, listen: false);
-    database.readJobs();
-
     return Scaffold(
       appBar: _buildAppBar(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createJob(context),
         child: Icon(Icons.add),
       ),
+      body: _buildBody(context),
     );
   }
 
@@ -76,5 +74,31 @@ class JobsPage extends StatelessWidget {
         exception: exc,
       );
     }
+  }
+
+  Widget _buildBody(BuildContext context) {
+    final database = Provider.of<Database>(context, listen: false);
+    return StreamBuilder<List<Job>>(
+      stream: database.getJobs(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final jobs = snapshot.data;
+          final children = jobs.map((job) => Text(job.name)).toList();
+          return ListView(
+            children: children,
+          );
+        }
+
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Some error occurred'),
+          );
+        }
+
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
   }
 }

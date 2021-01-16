@@ -11,14 +11,15 @@ class FirestoreDatabase implements Database {
   FirestoreDatabase({@required this.uid}) : assert(uid != null);
 
   @override
-  void createJob(Job job) {
+  Future<void> createJob(Job job) async {
     _setData(
       path: APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1'),
       data: job.toMap(),
     );
   }
 
-  Stream<List<Job>> readJobs() {
+  @override
+  Stream<List<Job>> getJobs() {
     final path = APIPath.jobList(uid);
     final reference = FirebaseFirestore.instance.collection(path);
     final snapshots = reference.snapshots();
@@ -31,7 +32,7 @@ class FirestoreDatabase implements Database {
                 ratePerHour: data['ratePerHour'],
               )
             : null;
-      });
+      }).toList();
     });
   }
 
