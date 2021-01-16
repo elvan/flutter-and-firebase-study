@@ -18,12 +18,20 @@ class FirestoreDatabase implements Database {
     );
   }
 
-  void readJobs() {
+  Stream<List<Job>> readJobs() {
     final path = APIPath.jobList(uid);
     final reference = FirebaseFirestore.instance.collection(path);
     final snapshots = reference.snapshots();
-    snapshots.listen((event) {
-      event.docs.forEach((element) => print(element.data()));
+    return snapshots.map((querySnapshot) {
+      return querySnapshot.docs.map((documentSnapshot) {
+        final data = documentSnapshot.data();
+        return data != null
+            ? Job(
+                name: data['name'],
+                ratePerHour: data['ratePerHour'],
+              )
+            : null;
+      });
     });
   }
 
