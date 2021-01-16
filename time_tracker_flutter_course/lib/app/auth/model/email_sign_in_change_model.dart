@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 import '../../../validator/email_and_password_validator.dart';
+import '../service/auth_base.dart';
 import 'email_sign_in_form_type.dart';
 
 class EmailSignInChangeModel with EmailAndPasswordValidator, ChangeNotifier {
+  final AuthBase auth;
+
   String email;
   String password;
   EmailSignInFormType formType;
@@ -11,6 +14,7 @@ class EmailSignInChangeModel with EmailAndPasswordValidator, ChangeNotifier {
   bool submitted;
 
   EmailSignInChangeModel({
+    @required this.auth,
     this.email = '',
     this.password = '',
     this.formType = EmailSignInFormType.signIn,
@@ -60,5 +64,38 @@ class EmailSignInChangeModel with EmailAndPasswordValidator, ChangeNotifier {
     this.submitted = submitted ?? this.submitted;
 
     notifyListeners();
+  }
+
+  void updateEmail(String email) => updateWith(email: email);
+
+  void updatePassword(String password) => updateWith(password: password);
+
+  void toggleFormType() {
+    final formType = this.formType == EmailSignInFormType.signIn
+        ? EmailSignInFormType.register
+        : EmailSignInFormType.signIn;
+
+    updateWith(
+      email: '',
+      password: '',
+      submitted: false,
+      isLoading: false,
+      formType: formType,
+    );
+  }
+
+  Future<void> submit() async {
+    updateWith(submitted: true, isLoading: true);
+
+    try {
+      if (formType == EmailSignInFormType.signIn) {
+        await auth.signInWithEmailAndPassword(email, password);
+      } else {
+        await auth.createUserWithEmailAndPassword(email, password);
+      }
+    } catch (exc) {
+      updateWith(isLoading: false);
+      rethrow;
+    }
   }
 }
