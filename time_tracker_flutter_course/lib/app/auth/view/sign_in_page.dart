@@ -17,28 +17,30 @@ class SignInPage extends StatelessWidget {
   static Widget create(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);
 
-    return Provider<SignInBloc>(
-      create: (context) => SignInBloc(auth: auth),
-      dispose: (context, bloc) => bloc.dispose(),
-      child: Consumer<SignInBloc>(
-        builder: (context, bloc, widget) => SignInPage(bloc: bloc),
+    return ChangeNotifierProvider<ValueNotifier<bool>>(
+      create: (context) => ValueNotifier<bool>(false),
+      child: Consumer<ValueNotifier<bool>>(
+        builder: (context, isLoading, widget) => Provider<SignInBloc>(
+          create: (context) => SignInBloc(auth: auth, isLoading: isLoading),
+          child: Consumer<SignInBloc>(
+            builder: (context, bloc, widget) => SignInPage(bloc: bloc),
+          ),
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = Provider.of<ValueNotifier<bool>>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Time Tracker'),
         elevation: 2.0,
       ),
       backgroundColor: Colors.grey[200],
-      body: StreamBuilder<bool>(
-        stream: bloc.isLoadingStream,
-        initialData: false,
-        builder: (context, snapshot) => _buildBody(context, snapshot.data),
-      ),
+      body: _buildBody(context, isLoading.value),
     );
   }
 

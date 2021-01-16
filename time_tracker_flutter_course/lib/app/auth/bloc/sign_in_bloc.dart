@@ -6,18 +6,13 @@ import 'package:flutter/foundation.dart';
 import '../service/auth_base.dart';
 
 class SignInBloc {
-  final _isLoadingController = StreamController<bool>();
   final AuthBase auth;
+  final ValueNotifier<bool> isLoading;
 
-  SignInBloc({@required this.auth});
-
-  Stream<bool> get isLoadingStream => _isLoadingController.stream;
-
-  void _setIsLoading(bool isLoading) => _isLoadingController.add(isLoading);
-
-  void dispose() {
-    _isLoadingController.close();
-  }
+  SignInBloc({
+    @required this.auth,
+    this.isLoading,
+  });
 
   Future<User> signInAnonymously() async {
     return await _signIn(auth.signInAnonymously);
@@ -33,10 +28,10 @@ class SignInBloc {
 
   Future<User> _signIn(Future<User> Function() signInMethod) async {
     try {
-      _setIsLoading(true);
+      isLoading.value = true;
       return await signInMethod();
     } catch (e) {
-      _setIsLoading(false);
+      isLoading.value = false;
       rethrow;
     }
   }
