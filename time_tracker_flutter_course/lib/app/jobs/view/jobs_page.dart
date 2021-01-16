@@ -9,6 +9,10 @@ class JobsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _createJob,
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -53,4 +57,6 @@ class JobsPage extends StatelessWidget {
       _signOut(context);
     }
   }
+
+  void _createJob() {}
 }
