@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/show_alert_dialog.dart';
-import '../auth/service/auth_base.dart';
+import '../../../common/show_alert_dialog.dart';
+import '../../auth/service/auth_base.dart';
 
-class HomePage extends StatelessWidget {
+class JobsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(context) {
     return AppBar(
-      title: Text('Home Page'),
+      title: Text('Jobs'),
       actions: [
         FlatButton(
           onPressed: () => _confirmSignOut(context),
