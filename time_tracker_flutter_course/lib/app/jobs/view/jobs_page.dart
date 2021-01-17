@@ -6,7 +6,7 @@ import '../../../common/show_alert_dialog.dart';
 import '../../../common/show_exception_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
 import '../entity/job.dart';
-import '../service/database.dart';
+import '../service/database_service.dart';
 
 class JobsPage extends StatelessWidget {
   @override
@@ -65,7 +65,7 @@ class JobsPage extends StatelessWidget {
 
   Future<void> _createJob(BuildContext context) async {
     try {
-      final database = Provider.of<Database>(context, listen: false);
+      final database = Provider.of<DatabaseService>(context, listen: false);
       await database.createJob(Job(name: 'Blogging', ratePerHour: 10));
     } on FirebaseException catch (exc) {
       showExceptionAlertDialog(
@@ -77,7 +77,7 @@ class JobsPage extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    final database = Provider.of<Database>(context, listen: false);
+    final database = Provider.of<DatabaseService>(context, listen: false);
     return StreamBuilder<List<Job>>(
       stream: database.jobsStream(),
       builder: (context, snapshot) {
