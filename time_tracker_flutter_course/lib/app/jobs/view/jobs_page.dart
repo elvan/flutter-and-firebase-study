@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './add_job_page.dart';
 import '../../../common/show_alert_dialog.dart';
 import '../../../common/show_exception_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
@@ -14,7 +15,7 @@ class JobsPage extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _createJob(context),
+        onPressed: () => AddJobPage.show(context),
         child: Icon(Icons.add),
       ),
       body: _buildBody(context),
