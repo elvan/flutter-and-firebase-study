@@ -18,6 +18,7 @@ class FirestoreService implements DatabaseService {
   Future<void> deleteJob(Job job) async =>
       _repository.deleteData(path: APIPath.job(uid, job.id));
 
+  @override
   Stream<Job> jobStream({@required String jobId}) => _repository.documentStream(
         path: APIPath.job(uid, jobId),
         builder: (data, documentId) => Job.fromMap(data, documentId),
