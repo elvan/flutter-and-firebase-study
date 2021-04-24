@@ -14,9 +14,9 @@ class FirestoreService implements DatabaseService {
   FirestoreService({@required this.uid}) : assert(uid != null);
 
   @override
-  Future<void> createJob(Job job) async {
-    _repository.setData(
-      path: APIPath.job(uid, documentIdFromCurrentDate()),
+  Future<void> setJob(Job job) async {
+    await _repository.setData(
+      path: APIPath.job(uid, job.id),
       data: job.toMap(),
     );
   }
