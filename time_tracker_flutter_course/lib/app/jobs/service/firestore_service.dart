@@ -25,7 +25,7 @@ class FirestoreService implements DatabaseService {
   Stream<List<Job>> jobsStream() {
     return _repository.collectionStream<Job>(
       path: APIPath.jobList(uid),
-      builder: (data) => Job.fromMap(data),
+      builder: (data, documentId) => Job.fromMap(data, documentId),
     );
   }
 }
