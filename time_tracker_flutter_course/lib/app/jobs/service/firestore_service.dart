@@ -14,18 +14,22 @@ class FirestoreService implements DatabaseService {
   FirestoreService({@required this.uid}) : assert(uid != null);
 
   @override
-  Future<void> setJob(Job job) async {
-    await _repository.setData(
-      path: APIPath.job(uid, job.id),
-      data: job.toMap(),
-    );
-  }
+  Future<void> deleteJob(Job job) async =>
+      _repository.deleteData(path: APIPath.job(uid, job.id));
 
   @override
   Stream<List<Job>> jobsStream() {
     return _repository.collectionStream<Job>(
       path: APIPath.jobList(uid),
       builder: (data, documentId) => Job.fromMap(data, documentId),
+    );
+  }
+
+  @override
+  Future<void> setJob(Job job) async {
+    await _repository.setData(
+      path: APIPath.job(uid, job.id),
+      data: job.toMap(),
     );
   }
 }
