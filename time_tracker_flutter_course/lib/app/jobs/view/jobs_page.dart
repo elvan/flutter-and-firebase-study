@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './add_job_page.dart';
 import '../../../common/show_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
+import 'add_job_page.dart';
+import 'job_list_tile.dart';
 
 class JobsPage extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class JobsPage extends StatelessWidget {
         onPressed: () => AddJobPage.show(context),
         child: Icon(Icons.add),
       ),
-      body: _buildBody(context),
+      body: _buildContents(context),
     );
   }
 
@@ -62,14 +63,19 @@ class JobsPage extends StatelessWidget {
     }
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildContents(BuildContext context) {
     final database = Provider.of<DatabaseService>(context, listen: false);
     return StreamBuilder<List<Job>>(
       stream: database.jobsStream(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final jobs = snapshot.data;
-          final children = jobs.map((job) => Text(job.name)).toList();
+          final children = jobs.map((job) {
+            return JobListTile(
+              job: job,
+              onTap: () {},
+            );
+          }).toList();
           return ListView(
             children: children,
           );
