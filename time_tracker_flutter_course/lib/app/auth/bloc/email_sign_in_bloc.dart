@@ -19,28 +19,6 @@ class EmailSignInBloc {
     _modelController.close();
   }
 
-  void updateEmail(String email) => updateWith(email: email);
-
-  void updatePassword(String password) => updateWith(password: password);
-
-  void updateWith({
-    String email,
-    String password,
-    EmailSignInFormType formType,
-    bool isLoading,
-    bool submitted,
-  }) {
-    _model = _model.copyWith(
-      email: email,
-      password: password,
-      formType: formType,
-      isLoading: isLoading,
-      submitted: submitted,
-    );
-
-    _modelController.add(_model);
-  }
-
   Future<void> submit() async {
     updateWith(submitted: true, isLoading: true);
 
@@ -69,5 +47,27 @@ class EmailSignInBloc {
       isLoading: false,
       formType: formType,
     );
+  }
+
+  void updateEmail(String email) => updateWith(email: email);
+
+  void updatePassword(String password) => updateWith(password: password);
+
+  void updateWith({
+    String email,
+    String password,
+    EmailSignInFormType formType,
+    bool isLoading,
+    bool submitted,
+  }) {
+    _model = _model.copyWith(
+      email: email,
+      password: password,
+      formType: formType,
+      isLoading: isLoading,
+      submitted: submitted,
+    );
+
+    _modelController.add(_model);
   }
 }
