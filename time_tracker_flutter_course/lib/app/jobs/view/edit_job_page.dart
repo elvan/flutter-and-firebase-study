@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../common/show_alert_dialog.dart';
 import '../../../common/show_exception_alert_dialog.dart';
@@ -16,9 +15,8 @@ class EditJobPage extends StatefulWidget {
   @override
   _EditJobPageState createState() => _EditJobPageState();
 
-  static Future<void> show(BuildContext context, {Job job}) async {
-    final database = Provider.of<DatabaseService>(context, listen: false);
-
+  static Future<void> show(BuildContext context,
+      {DatabaseService database, Job job}) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditJobPage(database: database, job: job),

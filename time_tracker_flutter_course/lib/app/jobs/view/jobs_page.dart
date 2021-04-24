@@ -18,7 +18,10 @@ class JobsPage extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(context),
+        onPressed: () => EditJobPage.show(
+          context,
+          database: Provider.of<DatabaseService>(context, listen: false),
+        ),
         child: Icon(Icons.add),
       ),
       body: _buildContents(context),
