@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../entity/job.dart';
 import '../service/database_service.dart';
 
 class AddJobPage extends StatefulWidget {
@@ -93,11 +94,12 @@ class _AddJobPageState extends State<AddJobPage> {
     ];
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_validateAndSaveForm()) {
-      print('Form was saved: $_name, rate per hour: $_ratePerHour');
+      final job = Job(name: _name, ratePerHour: _ratePerHour);
+      await widget.database.createJob(job);
+      Navigator.of(context).pop();
     }
-    // TODO: Submit data to firestore
   }
 
   bool _validateAndSaveForm() {

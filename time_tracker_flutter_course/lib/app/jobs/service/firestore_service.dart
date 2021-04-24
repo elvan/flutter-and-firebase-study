@@ -5,6 +5,8 @@ import '../repository/firestore_repository.dart';
 import 'api_path.dart';
 import 'database_service.dart';
 
+String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
+
 class FirestoreService implements DatabaseService {
   final String uid;
   final _repository = FirestoreRepository.instance;
@@ -14,7 +16,7 @@ class FirestoreService implements DatabaseService {
   @override
   Future<void> createJob(Job job) async {
     _repository.setData(
-      path: APIPath.job(uid, '2ksbtPLB7aHh7mn0M5k1'),
+      path: APIPath.job(uid, documentIdFromCurrentDate()),
       data: job.toMap(),
     );
   }
