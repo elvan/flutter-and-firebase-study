@@ -17,13 +17,6 @@ class JobsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => EditJobPage.show(
-          context,
-          database: Provider.of<DatabaseService>(context, listen: false),
-        ),
-        child: Icon(Icons.add),
-      ),
       body: _buildContents(context),
     );
   }
@@ -32,6 +25,14 @@ class JobsPage extends StatelessWidget {
     return AppBar(
       title: Text('Jobs'),
       actions: [
+        IconButton(
+          color: Colors.white,
+          icon: Icon(Icons.add),
+          onPressed: () => EditJobPage.show(
+            context,
+            database: Provider.of<DatabaseService>(context, listen: false),
+          ),
+        ),
         TextButton(
           onPressed: () => _confirmSignOut(context),
           child: Text(
