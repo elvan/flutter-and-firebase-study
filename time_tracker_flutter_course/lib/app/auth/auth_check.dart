@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:time_tracker_flutter_course/app/jobs/service/firestore_service.dart';
 
+import '../home/home_page.dart';
 import '../jobs/service/database_service.dart';
-import '../jobs/view/jobs_page.dart';
+import '../jobs/service/firestore_service.dart';
 import 'service/auth_base.dart';
 import 'view/sign_in_page.dart';
 
@@ -24,7 +24,7 @@ class AuthCheck extends StatelessWidget {
 
           return Provider<DatabaseService>(
             create: (_) => FirestoreService(uid: user.uid),
-            child: JobsPage(),
+            child: HomePage(),
           );
         }
 
