@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:time_tracker_flutter_course/app/home/cupertino_home_scaffold.dart';
 
+import 'cupertino_home_scaffold.dart';
 import 'tab_item.dart';
 
 class HomePage extends StatefulWidget {
