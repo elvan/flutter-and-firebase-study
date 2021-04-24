@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../common/show_alert_dialog.dart';
 import '../../../common/show_exception_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
+import '../../job_entries/job_entries_page.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
 import 'edit_job_page.dart';
@@ -54,7 +55,7 @@ class JobsPage extends StatelessWidget {
             ),
             child: JobListTile(
               job: job,
-              onTap: () => EditJobPage.show(context, job: job),
+              onTap: () => JobEntriesPage.show(context, job),
             ),
             direction: DismissDirection.endToStart,
             key: Key('job-${job.id}'),
