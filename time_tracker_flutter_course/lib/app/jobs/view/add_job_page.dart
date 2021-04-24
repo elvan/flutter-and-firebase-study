@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/show_exception_alert_dialog.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
 
@@ -96,9 +98,17 @@ class _AddJobPageState extends State<AddJobPage> {
 
   Future<void> _submit() async {
     if (_validateAndSaveForm()) {
-      final job = Job(name: _name, ratePerHour: _ratePerHour);
-      await widget.database.createJob(job);
-      Navigator.of(context).pop();
+      try {
+        final job = Job(name: _name, ratePerHour: _ratePerHour);
+        await widget.database.createJob(job);
+        Navigator.of(context).pop();
+      } on FirebaseException catch (exception) {
+        showExceptionAlertDialog(
+          context,
+          title: 'Operation failed',
+          exception: exception,
+        );
+      }
     }
   }
 
