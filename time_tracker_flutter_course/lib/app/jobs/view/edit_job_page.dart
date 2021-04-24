@@ -7,29 +7,39 @@ import '../../../common/show_exception_alert_dialog.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
 
-class AddJobPage extends StatefulWidget {
+class EditJobPage extends StatefulWidget {
   final DatabaseService database;
+  final Job job;
 
-  const AddJobPage({Key key, this.database}) : super(key: key);
+  const EditJobPage({Key key, this.database, this.job}) : super(key: key);
   @override
-  _AddJobPageState createState() => _AddJobPageState();
+  _EditJobPageState createState() => _EditJobPageState();
 
-  static Future<void> show(BuildContext context) async {
+  static Future<void> show(BuildContext context, {Job job}) async {
     final database = Provider.of<DatabaseService>(context, listen: false);
 
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AddJobPage(database: database),
+        builder: (context) => EditJobPage(database: database, job: job),
         fullscreenDialog: true,
       ),
     );
   }
 }
 
-class _AddJobPageState extends State<AddJobPage> {
+class _EditJobPageState extends State<EditJobPage> {
   final _formKey = GlobalKey<FormState>();
   String _name;
   int _ratePerHour;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.job != null) {
+      _name = widget.job.name;
+      _ratePerHour = widget.job.ratePerHour;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +58,7 @@ class _AddJobPageState extends State<AddJobPage> {
           )
         ],
         elevation: 2.0,
-        title: Text('New Job'),
+        title: Text(widget.job == null ? 'New Job' : 'Edit Job'),
       ),
       body: _buildContent(),
       backgroundColor: Colors.grey[200],
@@ -83,11 +93,13 @@ class _AddJobPageState extends State<AddJobPage> {
     return [
       TextFormField(
         decoration: InputDecoration(labelText: 'Job name'),
+        initialValue: _name,
         onSaved: (value) => _name = value,
         validator: (value) => value.isNotEmpty ? null : "Name can't be empty",
       ),
       TextFormField(
         decoration: InputDecoration(labelText: 'Rate per hour'),
+        initialValue: _ratePerHour != null ? '$_ratePerHour' : null,
         keyboardType: TextInputType.numberWithOptions(
           decimal: false,
           signed: false,

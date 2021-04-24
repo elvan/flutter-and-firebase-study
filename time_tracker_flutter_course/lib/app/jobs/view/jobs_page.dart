@@ -5,7 +5,7 @@ import '../../../common/show_alert_dialog.dart';
 import '../../auth/service/auth_base.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
-import 'add_job_page.dart';
+import 'edit_job_page.dart';
 import 'job_list_tile.dart';
 
 class JobsPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class JobsPage extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => AddJobPage.show(context),
+        onPressed: () => EditJobPage.show(context),
         child: Icon(Icons.add),
       ),
       body: _buildContents(context),
@@ -70,12 +70,12 @@ class JobsPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final jobs = snapshot.data;
-          final children = jobs.map((job) {
-            return JobListTile(
-              job: job,
-              onTap: () {},
-            );
-          }).toList();
+          final children = jobs
+              .map((job) => JobListTile(
+                    job: job,
+                    onTap: () => EditJobPage.show(context, job: job),
+                  ))
+              .toList();
           return ListView(
             children: children,
           );
