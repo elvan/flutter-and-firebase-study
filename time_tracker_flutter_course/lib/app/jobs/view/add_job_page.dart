@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../service/database_service.dart';
 
 class AddJobPage extends StatefulWidget {
+  final DatabaseService database;
+
+  const AddJobPage({Key key, this.database}) : super(key: key);
   @override
   _AddJobPageState createState() => _AddJobPageState();
 
   static Future<void> show(BuildContext context) async {
+    final database = Provider.of<DatabaseService>(context, listen: false);
+
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => AddJobPage(),
+        builder: (context) => AddJobPage(database: database),
         fullscreenDialog: true,
       ),
     );
