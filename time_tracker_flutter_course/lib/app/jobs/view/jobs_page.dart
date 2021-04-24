@@ -28,7 +28,7 @@ class JobsPage extends StatelessWidget {
     return AppBar(
       title: Text('Jobs'),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: () => _confirmSignOut(context),
           child: Text(
             'Logout',

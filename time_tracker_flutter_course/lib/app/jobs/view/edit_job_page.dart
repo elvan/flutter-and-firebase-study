@@ -47,7 +47,7 @@ class _EditJobPageState extends State<EditJobPage> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(
               'Save',
               style: TextStyle(

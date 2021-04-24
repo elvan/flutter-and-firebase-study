@@ -70,7 +70,7 @@ class _EmailSignInFormNotifierBasedState
         onPressed: model.canSubmit ? _submit : null,
       ),
       SizedBox(height: 8.0),
-      FlatButton(
+      TextButton(
         child: Text(model.secondaryButtonText),
         onPressed: !model.isLoading ? _toggleFormType : null,
       ),
