@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../../job_entries/entry.dart';
+import '../../entries/entity/entry.dart';
+import '../api/api_path.dart';
 import '../entity/job.dart';
 import '../repository/firestore_repository.dart';
-import 'api_path.dart';
 import 'database_service.dart';
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();

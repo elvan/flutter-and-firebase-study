@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../common/show_exception_alert_dialog.dart';
-import '../jobs/entity/job.dart';
-import '../jobs/service/database_service.dart';
-import '../jobs/view/edit_job_page.dart';
-import '../jobs/view/list_items_builder.dart';
-import 'entry.dart';
-import 'entry_list_item.dart';
+import '../../../common/show_exception_alert_dialog.dart';
+import '../../jobs/entity/job.dart';
+import '../../jobs/page/edit_job_page.dart';
+import '../../jobs/service/database_service.dart';
+import '../../jobs/widget/list_items_builder.dart';
+import '../entity/entry.dart';
+import '../widget/entry_list_item.dart';
 import 'entry_page.dart';
 
-class JobEntriesPage extends StatelessWidget {
-  const JobEntriesPage({@required this.database, @required this.job});
+class EntriesPage extends StatelessWidget {
+  const EntriesPage({@required this.database, @required this.job});
   final DatabaseService database;
   final Job job;
 
@@ -25,7 +25,7 @@ class JobEntriesPage extends StatelessWidget {
     await Navigator.of(context).push(
       CupertinoPageRoute(
         fullscreenDialog: false,
-        builder: (context) => JobEntriesPage(database: database, job: job),
+        builder: (context) => EntriesPage(database: database, job: job),
       ),
     );
   }

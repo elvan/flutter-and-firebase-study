@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/auth_check.dart';
+import 'auth/widget/auth_check.dart';
 import 'auth/service/auth_base.dart';
 import 'auth/service/auth_service.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../jobs/view/jobs_page.dart';
-import 'account/account_page.dart';
-import 'cupertino_home_scaffold.dart';
-import 'tab_item.dart';
+import '../../account/page/account_page.dart';
+import '../../jobs/page/jobs_page.dart';
+import '../model/tab_item.dart';
+import '../widget/cupertino_home_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   @override

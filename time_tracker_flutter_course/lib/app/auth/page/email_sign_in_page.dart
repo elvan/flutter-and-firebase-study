@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'email_sign_in_form_notifier_based.dart';
+import '../form/email_sign_in_form_notifier_based.dart';
 
 class EmailSignInPage extends StatelessWidget {
   @override

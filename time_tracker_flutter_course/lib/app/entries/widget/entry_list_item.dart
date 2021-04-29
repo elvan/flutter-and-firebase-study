@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../jobs/entity/job.dart';
-import 'entry.dart';
-import 'format.dart';
+import '../../jobs/entity/job.dart';
+import '../entity/entry.dart';
+import '../util/format.dart';
 
 class EntryListItem extends StatelessWidget {
   const EntryListItem({

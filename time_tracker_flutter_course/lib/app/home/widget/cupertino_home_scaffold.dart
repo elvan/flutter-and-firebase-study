@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'tab_item.dart';
+import '../model/tab_item.dart';
 
 class CupertinoHomeScaffold extends StatelessWidget {
   final TabItem currentTab;

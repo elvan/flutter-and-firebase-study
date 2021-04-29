@@ -1,4 +1,4 @@
-import '../../job_entries/entry.dart';
+import '../../entries/entity/entry.dart';
 import '../entity/job.dart';
 
 abstract class DatabaseService {

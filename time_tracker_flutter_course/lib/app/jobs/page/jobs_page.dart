@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/show_exception_alert_dialog.dart';
-import '../../job_entries/job_entries_page.dart';
+import '../../entries/view/entries_page.dart';
 import '../entity/job.dart';
 import '../service/database_service.dart';
+import '../widget/job_list_tile.dart';
+import '../widget/list_items_builder.dart';
 import 'edit_job_page.dart';
-import 'job_list_tile.dart';
-import 'list_items_builder.dart';
 
 class JobsPage extends StatelessWidget {
   @override
@@ -47,7 +47,7 @@ class JobsPage extends StatelessWidget {
             ),
             child: JobListTile(
               job: job,
-              onTap: () => JobEntriesPage.show(context, job),
+              onTap: () => EntriesPage.show(context, job),
             ),
             direction: DismissDirection.endToStart,
             key: Key('job-${job.id}'),
