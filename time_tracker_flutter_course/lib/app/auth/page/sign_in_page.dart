@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../../../common/show_exception_alert_dialog.dart';
 import '../bloc/sign_in_controller.dart';
 import '../service/auth_base.dart';
+import '../widget/sign_in_button.dart';
+import '../widget/social_sign_in_button.dart';
 import 'email_sign_in_page.dart';
-import 'sign_in_button.dart';
-import 'social_sign_in_button.dart';
 
 class SignInPage extends StatelessWidget {
   final SignInController controller;
