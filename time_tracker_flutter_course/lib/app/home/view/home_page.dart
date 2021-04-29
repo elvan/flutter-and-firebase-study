@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracker_flutter_course/app/entries/page/entries_page.dart';
 
 import '../../account/page/account_page.dart';
 import '../../jobs/page/jobs_page.dart';
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Map<TabItem, WidgetBuilder> get widgetBuilders {
     return {
       TabItem.jobs: (context) => JobsPage(),
-      TabItem.entries: (context) => Container(),
+      TabItem.entries: (context) => EntriesPage.create(context),
       TabItem.account: (context) => AccountPage(),
     };
   }
