@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../jobs/view/jobs_page.dart';
+import 'account/account_page.dart';
 import 'cupertino_home_scaffold.dart';
 import 'tab_item.dart';
 
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     return {
       TabItem.jobs: (context) => JobsPage(),
       TabItem.entries: (context) => Container(),
-      TabItem.account: (context) => Container(),
+      TabItem.account: (context) => AccountPage(),
     };
   }
 

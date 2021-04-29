@@ -33,16 +33,6 @@ class JobsPage extends StatelessWidget {
             database: Provider.of<DatabaseService>(context, listen: false),
           ),
         ),
-        TextButton(
-          onPressed: () => _confirmSignOut(context),
-          child: Text(
-            'Logout',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -71,20 +61,6 @@ class JobsPage extends StatelessWidget {
     );
   }
 
-  Future<void> _confirmSignOut(BuildContext context) async {
-    final didRequestSignOut = await showAlertDialog(
-      context,
-      title: 'Logout',
-      content: 'Are you sure that you want to logout?',
-      defaultActionText: 'Logout',
-      cancelActionText: 'Cancel',
-    );
-
-    if (didRequestSignOut == true) {
-      _signOut(context);
-    }
-  }
-
   Future<void> _delete(BuildContext context, Job job) async {
     try {
       final database = Provider.of<DatabaseService>(context, listen: false);
@@ -95,16 +71,6 @@ class JobsPage extends StatelessWidget {
         title: 'Operation failed',
         exception: exception,
       );
-    }
-  }
-
-  Future<void> _signOut(context) async {
-    final auth = Provider.of<AuthBase>(context, listen: false);
-
-    try {
-      await auth.signOut();
-    } catch (e) {
-      print(e.toString());
     }
   }
 }
