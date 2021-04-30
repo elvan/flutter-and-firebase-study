@@ -22,6 +22,6 @@ void main() {
       'AND password is updated '
       'AND submit is called '
       'THEN modelStream emits the correct events', (tester) async {
-    expect(bloc.modelStream, emits(EmailSignInModel));
+    expect(bloc.modelStream, emits(EmailSignInModel()));
   });
 }

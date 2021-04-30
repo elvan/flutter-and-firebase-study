@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../../../validator/email_and_password_validator.dart';
 import 'email_sign_in_form_type.dart';
 
@@ -59,4 +61,30 @@ class EmailSignInModel with EmailAndPasswordValidator {
       submitted: submitted ?? this.submitted,
     );
   }
+
+  @override
+  int get hashCode =>
+      hashValues(email, password, formType, isLoading, submitted);
+
+  @override
+  bool operator ==(other) {
+    if (identical(this, other)) return true;
+
+    if (runtimeType != other.runtimeType) return false;
+
+    final EmailSignInModel otherModel = other;
+
+    return email == otherModel.email &&
+        password == otherModel.password &&
+        formType == otherModel.formType &&
+        isLoading == otherModel.isLoading &&
+        submitted == otherModel.submitted;
+  }
+
+  @override
+  String toString() => 'email: $email, '
+      'password: $password, '
+      'formType: $formType, '
+      'isLoading: $isLoading, '
+      'submitted: $submitted';
 }
