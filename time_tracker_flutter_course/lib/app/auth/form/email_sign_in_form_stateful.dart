@@ -86,6 +86,7 @@ class _EmailSignInFormStatefulState extends State<EmailSignInFormStateful> {
       controller: _emailController,
       focusNode: _emailNode,
       autocorrect: false,
+      key: Key('email'),
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -112,6 +113,7 @@ class _EmailSignInFormStatefulState extends State<EmailSignInFormStateful> {
         errorText: showErrorText ? widget.invalidPasswordErrorText : null,
         enabled: _isLoading == false,
       ),
+      key: Key('password'),
       obscureText: true,
       onEditingComplete: _submit,
       onChanged: (email) => _updateState(),
