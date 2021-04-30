@@ -1,0 +1,28 @@
+import 'dart:js';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:provider/provider.dart';
+import 'package:time_tracker_flutter_course/app/auth/page/sign_in_page.dart';
+import 'package:time_tracker_flutter_course/app/auth/service/auth_base.dart';
+
+import '../../../mocks.dart';
+
+void main() {
+  MockAuth mockAuth;
+
+  setUp(() {
+    mockAuth = MockAuth();
+  });
+
+  Future<void> pumpSignInPage(WidgetTester tester) async {
+    await tester.pumpWidget(
+      Provider<AuthBase>(
+        create: (_) => mockAuth,
+        child: MaterialApp(
+          home: Builder(builder: (context) => SignInPage.create(context)),
+        ),
+      ),
+    );
+  }
+}
