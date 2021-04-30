@@ -25,7 +25,15 @@ void main() {
     ));
   }
 
-  testWidgets('email sign in form stateful ...', (tester) async {
-    // TODO: Implement test
+  testWidgets(
+      'WHEN user doesnt enter the email and password'
+      'AND user taps on the sign-in button'
+      'THEN signInWithEmailAndPassword is not called', (tester) async {
+    await pumpEmailSignInForm(tester);
+
+    final signInButton = find.text('Sign in');
+    await tester.tap(signInButton);
+
+    verifyNever(mockAuth.signInWithEmailAndPassword(any, any));
   });
 }
