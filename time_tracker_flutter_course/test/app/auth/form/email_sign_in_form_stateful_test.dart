@@ -64,4 +64,21 @@ void main() {
       verify(mockAuth.signInWithEmailAndPassword(email, password));
     });
   });
+
+  group('register', () {
+    testWidgets(
+        'WHEN user doesnt enter the email and password '
+        'AND user taps on the sign-in button '
+        'THEN createUserWithEmailAndPassword is not called', (tester) async {
+      await pumpEmailSignInForm(tester);
+
+      final registerButton = find.text('Need an account? Register');
+      await tester.tap(registerButton);
+
+      await tester.pump();
+
+      final createAccountButton = find.text('Create an account');
+      expect(createAccountButton, findsOneWidget);
+    });
+  });
 }
