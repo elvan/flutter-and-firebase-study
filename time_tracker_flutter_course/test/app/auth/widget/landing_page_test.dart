@@ -17,8 +17,9 @@ class MockUser extends Mock implements User {
 
   factory MockUser.uid(String uid) {
     final user = MockUser();
-
     when(user.uid).thenReturn(uid);
+
+    return user;
   }
 }
 
