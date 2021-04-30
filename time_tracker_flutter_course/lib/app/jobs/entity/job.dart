@@ -19,6 +19,10 @@ class Job {
     final String name = data['name'];
     final int ratePerHour = data['ratePerHour'];
 
+    if (name == null) {
+      return null;
+    }
+
     return Job(
       id: documentId,
       name: name,
@@ -52,4 +56,7 @@ class Job {
         name == otherJob.name &&
         ratePerHour == otherJob.ratePerHour;
   }
+
+  @override
+  String toString() => 'id: $id, name: $name, ratePerHour: $ratePerHour';
 }
