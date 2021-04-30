@@ -10,25 +10,16 @@ import 'package:time_tracker_flutter_course/app/auth/service/auth_base.dart';
 import 'package:time_tracker_flutter_course/app/auth/widget/landing_page.dart';
 import 'package:time_tracker_flutter_course/app/home/view/home_page.dart';
 
-class MockAuth extends Mock implements AuthBase {}
-
-class MockUser extends Mock implements User {
-  MockUser();
-
-  factory MockUser.uid(String uid) {
-    final user = MockUser();
-    when(user.uid).thenReturn(uid);
-
-    return user;
-  }
-}
+import '../../../mocks.dart';
 
 void main() {
   MockAuth mockAuth;
+  MockDatabase mockDatabase;
   StreamController<User> onAuthStateChangedController;
 
   setUp(() {
     mockAuth = MockAuth();
+    mockDatabase = MockDatabase();
     onAuthStateChangedController = StreamController<User>();
   });
 
@@ -40,7 +31,9 @@ void main() {
     await tester.pumpWidget(Provider<AuthBase>(
       create: (_) => mockAuth,
       child: MaterialApp(
-        home: LandingPage(),
+        home: LandingPage(
+          databaseBuilder: (_) => mockDatabase,
+        ),
       ),
     ));
 
