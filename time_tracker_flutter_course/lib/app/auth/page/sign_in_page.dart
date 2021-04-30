@@ -13,7 +13,7 @@ class SignInPage extends StatelessWidget {
   final SignInController controller;
   final bool isLoading;
 
-  static const emailPasswordKey = Key('email-password');
+  static const Key emailPasswordKey = Key('email-password');
 
   const SignInPage({
     Key key,
