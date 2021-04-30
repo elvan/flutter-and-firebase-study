@@ -14,12 +14,17 @@ void main() {
     mockAuth = MockAuth();
   });
 
-  Future<void> pumpEmailSignInForm(WidgetTester tester) async {
+  Future<void> pumpEmailSignInForm(
+    WidgetTester tester, {
+    VoidCallback onSignIn,
+  }) async {
     await tester.pumpWidget(Provider<AuthBase>(
       create: (_) => mockAuth,
       child: MaterialApp(
         home: Scaffold(
-          body: EmailSignInFormStateful(),
+          body: EmailSignInFormStateful(
+            onSignIn: onSignIn,
+          ),
         ),
       ),
     ));
@@ -29,20 +34,25 @@ void main() {
     testWidgets(
         'WHEN user doesnt enter the email and password '
         'AND user taps on the sign-in button '
-        'THEN signInWithEmailAndPassword is not called', (tester) async {
-      await pumpEmailSignInForm(tester);
+        'THEN signInWithEmailAndPassword is not called '
+        'AND user is not signed-in', (tester) async {
+      var signedIn = false;
+      await pumpEmailSignInForm(tester, onSignIn: () => signedIn = true);
 
       final signInButton = find.text('Sign in');
       await tester.tap(signInButton);
 
       verifyNever(mockAuth.signInWithEmailAndPassword(any, any));
+      expect(signedIn, false);
     });
 
     testWidgets(
-        'WHEN user enters the email and password '
+        'WHEN user enters a valid email and password '
         'AND user taps on the sign-in button '
-        'THEN signInWithEmailAndPassword is called', (tester) async {
-      await pumpEmailSignInForm(tester);
+        'THEN signInWithEmailAndPassword is called '
+        'AND user is signed in', (tester) async {
+      var signedIn = false;
+      await pumpEmailSignInForm(tester, onSignIn: () => signedIn = true);
 
       const email = 'user@example.com';
       const password = 'pswd1234';
@@ -61,6 +71,7 @@ void main() {
       await tester.tap(signInButton);
 
       verify(mockAuth.signInWithEmailAndPassword(email, password)).called(1);
+      expect(signedIn, true);
     });
   });
 
