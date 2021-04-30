@@ -1,22 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:rxdart/subjects.dart';
 
 import '../model/email_sign_in_form_type.dart';
 import '../model/email_sign_in_model.dart';
 import '../service/auth_base.dart';
 
 class EmailSignInBloc {
-  final _modelController = StreamController<EmailSignInModel>();
-  EmailSignInModel _model = EmailSignInModel();
+  EmailSignInModel get _model => _modelSubject.valueWrapper.value;
+
   final AuthBase auth;
+
+  final _modelSubject =
+      BehaviorSubject<EmailSignInModel>.seeded(EmailSignInModel());
 
   EmailSignInBloc({@required this.auth});
 
-  Stream<EmailSignInModel> get modelStream => _modelController.stream;
+  Stream<EmailSignInModel> get modelStream => _modelSubject.stream;
 
   void dispose() {
-    _modelController.close();
+    _modelSubject.close();
   }
 
   Future<void> submit() async {
@@ -60,14 +64,12 @@ class EmailSignInBloc {
     bool isLoading,
     bool submitted,
   }) {
-    _model = _model.copyWith(
+    _modelSubject.add(_model.copyWith(
       email: email,
       password: password,
       formType: formType,
       isLoading: isLoading,
       submitted: submitted,
-    );
-
-    _modelController.add(_model);
+    ));
   }
 }
