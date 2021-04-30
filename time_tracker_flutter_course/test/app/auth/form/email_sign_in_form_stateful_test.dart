@@ -55,21 +55,19 @@ void main() {
       expect(passwordField, findsOneWidget);
       await tester.enterText(passwordField, password);
 
-      // rebuild when the widget calls setState()
       await tester.pump();
 
       final signInButton = find.text('Sign in');
       await tester.tap(signInButton);
 
-      verify(mockAuth.signInWithEmailAndPassword(email, password));
+      verify(mockAuth.signInWithEmailAndPassword(email, password)).called(1);
     });
   });
 
   group('register', () {
     testWidgets(
-        'WHEN user doesnt enter the email and password '
-        'AND user taps on the sign-in button '
-        'THEN createUserWithEmailAndPassword is not called', (tester) async {
+        'WHEN user taps on the secondary button '
+        'THEN form toggles to reqgistration mode', (tester) async {
       await pumpEmailSignInForm(tester);
 
       final registerButton = find.text('Need an account? Register');
@@ -79,6 +77,39 @@ void main() {
 
       final createAccountButton = find.text('Create an account');
       expect(createAccountButton, findsOneWidget);
+    });
+
+    testWidgets(
+        'WHEN user taps on the secondary button '
+        'AND user enters the email and password '
+        'AND user taps on the register button '
+        'THEN createUserWithEmailAndPassword is called', (tester) async {
+      await pumpEmailSignInForm(tester);
+
+      const email = 'user@example.com';
+      const password = 'pswd1234';
+
+      final registerButton = find.text('Need an account? Register');
+      await tester.tap(registerButton);
+
+      await tester.pump();
+
+      final emailField = find.byKey(Key('email'));
+      expect(emailField, findsOneWidget);
+      await tester.enterText(emailField, email);
+
+      final passwordField = find.byKey(Key('password'));
+      expect(passwordField, findsOneWidget);
+      await tester.enterText(passwordField, password);
+
+      await tester.pump();
+
+      final createAccountButton = find.text('Create an account');
+      expect(createAccountButton, findsOneWidget);
+      await tester.tap(createAccountButton);
+
+      verify(mockAuth.createUserWithEmailAndPassword(email, password))
+          .called(1);
     });
   });
 }
