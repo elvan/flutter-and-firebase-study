@@ -10,6 +10,10 @@ import '../service/auth_base.dart';
 
 class EmailSignInFormStateful extends StatefulWidget
     with EmailAndPasswordValidator {
+  final VoidCallback onSignIn;
+
+  EmailSignInFormStateful({this.onSignIn});
+
   @override
   _EmailSignInFormStatefulState createState() =>
       _EmailSignInFormStatefulState();
@@ -134,7 +138,9 @@ class _EmailSignInFormStatefulState extends State<EmailSignInFormStateful> {
       } else {
         await auth.createUserWithEmailAndPassword(_email, _password);
       }
-      Navigator.of(context).pop();
+      if (widget.onSignIn != null) {
+        widget.onSignIn();
+      }
     } on FirebaseAuthException catch (exc) {
       showExceptionAlertDialog(
         context,
