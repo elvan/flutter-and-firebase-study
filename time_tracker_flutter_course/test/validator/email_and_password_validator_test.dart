@@ -13,4 +13,10 @@ void main() {
 
     expect(validator.isValid(''), false);
   });
+
+  test('null string is invalid', () {
+    final validator = NonEmptyStringValidator();
+
+    expect(validator.isValid(null), false);
+  });
 }
