@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/widget/auth_check.dart';
+import 'auth/widget/landing_page.dart';
 import 'auth/service/auth_base.dart';
 import 'auth/service/auth_service.dart';
 
@@ -15,7 +15,7 @@ class TimeTrackerApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
         ),
-        home: AuthCheck(),
+        home: LandingPage(),
       ),
     );
   }

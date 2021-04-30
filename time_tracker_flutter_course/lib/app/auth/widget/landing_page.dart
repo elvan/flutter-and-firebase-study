@@ -8,7 +8,7 @@ import '../../jobs/service/firestore_service.dart';
 import '../page/sign_in_page.dart';
 import '../service/auth_base.dart';
 
-class AuthCheck extends StatelessWidget {
+class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthBase>(context, listen: false);

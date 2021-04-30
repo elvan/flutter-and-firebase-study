@@ -12,7 +12,6 @@ class MockUser extends Mock implements User {}
 
 void main() {
   MockAuth mockAuth;
-  MockUser mockUser;
 
   setUp(() {
     mockAuth = MockAuth();
