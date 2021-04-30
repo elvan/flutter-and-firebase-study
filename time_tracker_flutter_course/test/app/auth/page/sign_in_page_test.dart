@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -25,4 +23,8 @@ void main() {
       ),
     );
   }
+
+  testWidgets('email and password navigation', (tester) async {
+    await pumpSignInPage(tester);
+  });
 }

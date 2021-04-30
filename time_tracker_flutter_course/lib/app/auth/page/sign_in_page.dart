@@ -13,6 +13,8 @@ class SignInPage extends StatelessWidget {
   final SignInController controller;
   final bool isLoading;
 
+  static const emailPasswordKey = Key('email-password');
+
   const SignInPage({
     Key key,
     @required this.controller,
@@ -79,6 +81,7 @@ class SignInPage extends StatelessWidget {
           ),
           SizedBox(height: 8.0),
           SignInButton(
+            key: emailPasswordKey,
             text: 'Sign in with Email',
             color: Colors.tealAccent[700],
             textColor: Colors.white,
